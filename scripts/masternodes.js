@@ -22,6 +22,16 @@ var MasternodesSchema = new mongoose.Schema({
     activesec: {type: Number, default: 0}
 });
 
+function trim(s, mask) {
+    while (~mask.indexOf(s[0])) {
+        s = s.slice(1);
+    }
+    while (~mask.indexOf(s[s.length - 1])) {
+        s = s.slice(0, -1);
+    }
+    return s;
+}
+
 const conn = mongoose.createConnection(dbString);
 const MyModel = conn.model('Masternodes', MasternodesSchema);
 
@@ -42,7 +52,8 @@ function Action() {
             var mn_data = body[mn].split(/\s+/);
             var mn_status = mn_data[1];
             var mn_pubkey = mn_data[3];
-            var mn_address = mn_data[4];
+            //var mn_address = mn_data[4];
+            var mn_address = trim(mn_data[4].substring(0, mn_data[4].lastIndexOf(":")), "[]");
             var mn_lastseen = mn_data[5];
             var mn_activesec = mn_data[6];
 

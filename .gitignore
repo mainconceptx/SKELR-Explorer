@@ -25,6 +25,7 @@ build/Release
 node_modules
 settings.json
 public/javascripts/mapdata.js
+
 .idea
 *~
 *.ico

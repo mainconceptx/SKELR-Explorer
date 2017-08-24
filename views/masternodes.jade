@@ -26,8 +26,8 @@ block content
                             var minutes = Math.floor(activesec / 60);
                             var seconds = activesec % 60;
                             json.data[i]['activesec'] = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-
-                            json.data[i]['address'] = json.data[i]['address'].split(':')[0];
+                            json.data[i]['address'] = json.data[i]['address']
+                            //json.data[i]['address'] = json.data[i]['address'].split(':')[0];
                         }
 
 
