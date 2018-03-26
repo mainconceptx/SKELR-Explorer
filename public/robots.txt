@@ -1,0 +1,3 @@
+Disallow: /block
+Disallow: /tx
+Disallow: /address
