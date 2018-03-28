@@ -18,7 +18,7 @@ var app = express();
 bitcoinapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
   bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'gettxoutsetinfo']);
+    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'gettxoutsetinfo', 'masternode']);
 } else {
   // enable additional heavy api calls
   /*
@@ -35,7 +35,7 @@ if (settings.heavy != true) {
   bitcoinapi.setAccess('only', ['getinfo', 'getstakinginfo', 'getnetworkhashps', 'getdifficulty', 'getconnectioncount',
     'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction','getmaxmoney', 'getvote',
     'getmaxvote', 'getphase', 'getreward', 'getnextrewardestimate', 'getnextrewardwhenstr',
-    'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo']);
+    'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo', 'masternode']);
 }
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -106,6 +106,30 @@ app.use('/ext/connections', function(req,res){
   });
 });
 
+app.use('/ext/getcirculatingsupply', function(req,res){
+  lib.get_supply(function(supply){
+    if (settings.masternodes.collateral.enabled){
+      db.get_masternodes_count(function(mn_count){
+        res.send(' '+(supply-(mn_count*settings.masternodes.collateral)));
+      });
+    } else {
+      res.send(' '+supply);
+    }
+  });
+});
+
+app.use('/ext/getmasternodecount', function(req,res){
+  db.get_masternodes_count(function(mn_count){
+    res.send(' '+mn_count);
+  });
+});
+
+app.use('/ext/masternodes', function(req,res){
+  db.get_masternodes(function(masternodes){
+    res.send({data: masternodes});
+  });
+});
+
 // locals
 app.set('title', settings.title);
 app.set('symbol', settings.symbol);
@@ -124,6 +148,7 @@ app.set('show_sent_received', settings.show_sent_received);
 app.set('logo', settings.logo);
 app.set('theme', settings.theme);
 app.set('labels', settings.labels);
+app.set('masternodes', settings.masternodes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

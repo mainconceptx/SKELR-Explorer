@@ -111,6 +111,12 @@ function route_get_address(res, hash, count) {
           }
         });
       }, function(){
+        if (settings.masternodes.enabled) {
+          db.get_masternode(address.a_id, function(masternode) {
+            res.render('address', { active: 'address', address: address, txs: txs, masternode: masternode});
+          });
+          return;
+        }
 
         res.render('address', { active: 'address', address: address, txs: txs});
       });
@@ -192,6 +198,10 @@ router.get('/movement', function(req, res) {
 
 router.get('/network', function(req, res) {
   res.render('network', {active: 'network'});
+});
+
+router.get('/masternodes', function(req, res) {
+  res.render('masternodes', {active: 'masternodes'});
 });
 
 router.get('/reward', function(req, res){
@@ -301,15 +311,34 @@ router.get('/ext/summary', function(req, res) {
             if (hashrate == 'There was an error. Check your console.') {
               hashrate = 0;
             }
-            res.send({ data: [{
-              difficulty: difficulty,
-              difficultyHybrid: difficultyHybrid,
-              supply: stats.supply,
-              hashrate: hashrate,
-              lastPrice: stats.last_price,
-              connections: connections,
-              blockcount: blockcount
-            }]});
+
+            if (settings.masternodes.enabled) {
+              db.get_masternodes_count(function(mn_count) {
+                res.send({ data: [{
+                  difficulty: difficulty,
+                  difficultyHybrid: difficultyHybrid,
+                  supply: stats.supply,
+                  circulating: stats.supply - (mn_count * settings.masternodes.collateral),
+                  hashrate: hashrate,
+                  lastPrice: stats.last_price,
+                  connections: connections,
+                  blockcount: blockcount,
+                  masternodes: {
+                    count: mn_count
+                  }
+                }]});
+              });
+            } else {
+              res.send({ data: [{
+                difficulty: difficulty,
+                difficultyHybrid: difficultyHybrid,
+                supply: stats.supply,
+                hashrate: hashrate,
+                lastPrice: stats.last_price,
+                connections: connections,
+                blockcount: blockcount
+              }]});
+            }
           });
         });
       });

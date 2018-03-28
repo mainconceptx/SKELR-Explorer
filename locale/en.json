@@ -13,6 +13,7 @@
     "menu_movement": "Movement",
     "menu_node": "Nodes",
     "menu_network": "Network",
+    "menu_masternodes": "Masternodes",
 
     // explorer view
     "ex_title": "Block Explorer",
@@ -24,6 +25,7 @@
     "ex_latest_transactions": "Latest Transactions",
     "ex_summary": "Block Summary",
     "ex_supply": "Coin Supply",
+    "ex_circulating": "Circulating Supply",
     "ex_block": "Block",
 
     // transaction view
@@ -81,6 +83,19 @@
     "net_subversion": "Sub-version",
     "net_country": "Country",
     "net_warning": "This is sub sample of the network based on wallets that have connected to this node in the last 24hours.",
+
+    // masternodes
+    "mn_masternode": "Masternode",
+    "mn_masternodes": "Masternodes",
+    "mn_rank": "Rank",
+    "mn_network": "Network",
+    "mn_address": "Address",
+    "mn_version": "Version",
+    "mn_status": "Status",
+    "mn_activetime": "Active Time",
+    "mn_lastseen": "Last Seen",
+    "mn_lastpaid": "Last Paid",
+    "mn_notpaid": "Not Paid Yet",
 
     // api view
     "api_title": "API Documentation",
