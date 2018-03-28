@@ -197,7 +197,7 @@ is_locked(function (exists) {
               });
             }
           });
-        } else if (database == 'markets') {
+        } else if (database == 'market') {
           //update markets
           var markets = settings.markets.enabled;
           var complete = 0;
