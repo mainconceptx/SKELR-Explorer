@@ -129,6 +129,7 @@ is_locked(function (exists) {
   } else {
     create_lock(function (){
       console.log("script launched with pid: " + process.pid);
+      mongoose.connect(dbString, function(err) {
       mongoose.Promise = global.Promise;
       mongoose.connect(dbString, { useMongoClient: true }, function(err) {
         if (err) {
