@@ -7,6 +7,7 @@ html
     link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/jquery-jvectormap-2.0.3.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
     script(src='/vendor/jqplot/jquery.jqplot.min.js')
@@ -92,8 +93,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='/')
-            img(src='#{settings.logo}')
+          a.navbar-brand(href='/') #{settings.title}
 
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
@@ -139,7 +139,6 @@ html
     .col-md-12
       .row.text-center
         .col-md-2.col-md-offset-1
-          if settings.index.show_hashrate.enabled == 'true'
            .panel.panel-default.hidden-sm.hidden-xs
              .panel-heading
                if settings.nethash_units == 'K'
@@ -172,6 +171,9 @@ html
                label#difficultyHybrid -
               else
                label#difficulty -
+        .col-md-2.col-sm-12
+          img(src='#{settings.logo}', style='margin-top:-15px;height:128px;')
+          <br><br>
         .col-md-2
          .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
@@ -189,7 +191,7 @@ html
                label#lblX1
               else
                label#supply -
-        if settings.display.markets == true
+         if settings.index.show_hashrate.enabled == 'true'
          .col-md-2
            .panel.panel-default.hidden-sm.hidden-xs
              .panel-heading

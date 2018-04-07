@@ -33,13 +33,14 @@ mongoose.connect(dbString, { useMongoClient: true }, function(err) {
             // peer already exists
             loop.next();
           } else {
-            request({uri: 'http://freegeoip.net/json/' + address, json: true}, function (error, response, geo) {
+            request({uri: 'http://geoip.nekudo.com/api/' + address, json: true}, function (error, response, geo) {
               db.create_peer({
                 address: address,
                 protocol: body[i].version,
                 version: body[i].subver.replace('/', '').replace('/', ''),
-                country: geo.country_name
-              }, function(){
+                country: geo.country.name,
+		countrycode: geo.country.code
+                 }, function(){
                 loop.next();
               });
             });

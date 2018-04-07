@@ -4,7 +4,7 @@ var bresponse = undefined;
 var path = './public/javascripts/mapdata.js';
 
 function get_cc(cb) {
-  var req_url = "http://btczexplorer.blockhub.info/ext/connections/";
+  var req_url = "http://skelr.blockz.win/ext/connections/";
   request({uri: req_url, json: true}, function (error, response, body) {
   bresponse = body;
   cb(bresponse);
