@@ -2,9 +2,14 @@ var request = require('request');
 var fs = require('fs');
 var bresponse = undefined;
 var path = './public/javascripts/mapdata.js';
+var settings = require('../lib/settings')
+
+var base_url = 'http://127.0.0.1:' + settings.port;
+
 
 function get_cc(cb) {
-  var req_url = "http://skelr.blockz.win/ext/connections/";
+  var req_url = base_url + '/ext/connections/';
+
   request({uri: req_url, json: true}, function (error, response, body) {
   bresponse = body;
   cb(bresponse);
