@@ -313,19 +313,16 @@ router.get('/ext/summary', function(req, res) {
             }
 
             if (settings.masternodes.enabled) {
-              db.get_masternodes_count(function(mn_count) {
+              lib.get_masternodecount(function(masternodes){
                 res.send({ data: [{
                   difficulty: difficulty,
                   difficultyHybrid: difficultyHybrid,
                   supply: stats.supply,
-                  circulating: stats.supply - (mn_count * settings.masternodes.collateral),
                   hashrate: hashrate,
                   lastPrice: stats.last_price,
                   connections: connections,
                   blockcount: blockcount,
-                  masternodes: {
-                    count: mn_count
-                  }
+                  masternodeCount: masternodes
                 }]});
               });
             } else {
