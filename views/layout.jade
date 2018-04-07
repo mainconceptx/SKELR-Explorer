@@ -27,9 +27,6 @@ html
         function update_stats(){
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply);
-            if (#{settings.masternodes.enabled} === true)
-              $("#circulating").text(json.data[0].circulating);
-
             $("#difficulty").text(json.data[0].difficulty);
             $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
             $("#hashrate").text(json.data[0].hashrate);
@@ -181,13 +178,6 @@ html
                label#lblX1
               else
                label#supply -
-        if settings.masternodes.collateral
-          .col-md-2
-            .panel.panel-default.hidden-sm.hidden-xs
-              .panel-heading
-                strong #{settings.locale.ex_circulating} (#{settings.symbol})
-              .panel-body
-                label#circulating -
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
