@@ -163,3 +163,8 @@ tr {
 	position: absolute;
 	bottom: 0px;
 }
+
+.donate {
+	font-size: 10px;
+	font-weight: normal;
+}
