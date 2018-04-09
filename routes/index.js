@@ -111,13 +111,6 @@ function route_get_address(res, hash, count) {
           }
         });
       }, function(){
-        if (settings.masternodes.enabled) {
-          db.get_masternode(address.a_id, function(masternode) {
-            res.render('address', { active: 'address', address: address, txs: txs, masternode: masternode});
-          });
-          return;
-        }
-
         res.render('address', { active: 'address', address: address, txs: txs});
       });
 

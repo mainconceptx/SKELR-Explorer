@@ -1,1 +1,1 @@
-var mapData = {"US":10,"NL":7,"RU":3,"FR":3,"DE":2,"SK":1,"UA":1,"GB":1,"CA":1};
+var mapData = {"US":11,"NL":6,"RU":3,"FR":3,"DE":2,"SK":1,"UA":1,"GB":1,"CA":1,"SE":1};

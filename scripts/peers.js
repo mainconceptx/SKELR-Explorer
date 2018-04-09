@@ -6,8 +6,8 @@ var mongoose = require('mongoose')
 
 var COUNT = 5000; //number of blocks to index
 
-function maskips (splitaddy) {
-  var ip = splitaddy;
+function maskips (splitaddr) {
+  var ip = splitaddr;
   var breakip = ip.split('.');
   var masked = breakip[0] + '.' + breakip[1] + '.' + 'XXX' + '.' + 'XXX';
   return masked;
@@ -43,7 +43,7 @@ mongoose.connect(dbString, { useMongoClient: true }, function(err) {
           } else {
             request({uri: 'http://geoip.nekudo.com/api/' + address, json: true}, function (error, response, geo) {
               db.create_peer({
-                address: maskedaddr,
+                address: address,
                 protocol: body[i].version,
                 version: body[i].subver.replace('/', '').replace('/', ''),
                 country: geo.country.name,

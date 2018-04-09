@@ -2,7 +2,7 @@ var request = require('request');
 var fs = require('fs');
 var bresponse = undefined;
 var path = './public/javascripts/mapdata.js';
-var settings = require('../lib/settings')
+var settings = require('../lib/settings');
 
 var base_url = 'http://127.0.0.1:' + settings.port;
 

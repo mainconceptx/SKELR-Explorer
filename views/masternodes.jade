@@ -1,52 +1,65 @@
 extends layout
 
 block content
-  script.
-    $(document).ready(function(){
-      var ctable = $('#masternodes-table').dataTable( {
-        autoWidth: true,
-        searching: false,
-        ordering: false,
-        responsive: true,
-        lengthChange: true,
-        processing: true,
-        ajax: {
-          url: '/ext/masternodes',
-          dataSrc: function ( json ) {
-            for ( var i=0;i<json.data.length; i++ ) {
-              json.data[i]['lastseen'] = new Date((json.data[i]['lastseen']) * 1000).toUTCString();
-              json.data[i]['lastpaid'] = json.data[i]['lastpaid'] ? new Date((json.data[i]['lastpaid']) * 1000).toUTCString() : "#{settings.locale.mn_notpaid}";
-              json.data[i]['txhash'] = "<a href='/tx/" + json.data[i]['txhash'] + "'>" + json.data[i]['txhash'] + "</a>";
-              json.data[i]['addr'] = "<a href='/address/" + json.data[i]['addr'] + "'>" + json.data[i]['addr'] + "</a>";
-            }
-            return json.data;
-          }
-        },
-        columns: [
-          { data: 'rank' },
-          { data: 'network' },
-          { data: 'addr' },
-          { data: 'version' },
-          { data: 'status' },
-          { data: 'activetime' },
-          { data: 'lastseen' },
-          { data: 'lastpaid' }
-        ]
-      });
-    });
-  .col-md-12(style="margin-bottom: 4%")
-    .panel.panel-default
-      .panel-heading
-        strong #{settings.locale.mn_masternodes}
-      table#masternodes-table.table.table-bordered.table-striped
-        thead
-          tr
-            th.text-center #{settings.locale.mn_rank}
-            th.text-center #{settings.locale.mn_network}
-            th.text-center #{settings.locale.nm_address}
-            th.text-center #{settings.locale.mn_version}
-            th.text-center #{settings.locale.mn_status}
-            th.text-center #{settings.locale.mn_activetime}
-            th.text-center #{settings.locale.mn_lastseen}
-            th.text-center #{settings.locale.mn_lastpaid}
-        tbody.text-center
+    script.
+        $(document).ready(function () {
+            var mtable = $('#masternodes-table').dataTable({
+                autoWidth: true,
+                searching: true,
+                ordering: false,
+                responsive: true,
+                lengthChange: true,
+                processing: true,
+                ajax: {
+
+                    url: '/ext/masternodes',
+                    dataSrc: function (json) {
+                        for (var i = 0; i < json.data.length; i++) {
+                            json.data[i]['pubkey'] = "<a href='/address/" + json.data[i]['pubkey'] + "'>" + json.data[i]['pubkey'] + "</a>";
+
+
+                            json.data[i]['lastseen'] = new Date((json.data[i]['lastseen']) * 1000).toLocaleString();
+
+                            var activesec = json.data[i]['activesec'];
+                            var hours = Math.floor(activesec / 3600);
+                            activesec %= 3600;
+                            var minutes = Math.floor(activesec / 60);
+                            var seconds = activesec % 60;
+                            json.data[i]['activesec'] = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+
+                            json.data[i]['address'] = json.data[i]['address'].split(':')[0];
+                        }
+
+
+
+                        return json.data;
+                    }
+                },
+
+
+                columns: [
+                    {data: 'pubkey', width: '30%'},
+                    {data: 'status', width: '15%'},
+                    {data: 'lastseen', width: '20%'},
+                    {data: 'activesec', width: '15%'},
+                    {data: 'address', width: '20%'}
+                ]
+            });
+            setInterval(function () {
+                mtable.api().ajax.reload(null,false);
+            },60000);
+        });
+
+    .col-md-12(style="margin-bottom: 4%")
+        .panel.panel-default
+            .panel-heading
+                strong #{settings.locale.mn_masternodes}
+            table#masternodes-table.table.table-bordered.table-striped
+                thead
+                    tr
+                        th.text-center #{settings.locale.mn_pubkey}
+                        th.text-center #{settings.locale.mn_status}
+                        th.text-center #{settings.locale.mn_lastseen}
+                        th.text-center #{settings.locale.mn_activesec}
+                        th.text-center #{settings.locale.mn_address}
+                tbody.text-center
