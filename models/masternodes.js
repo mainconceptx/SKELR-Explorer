@@ -7,7 +7,9 @@ var MasternodesSchema = new Schema({
   address: { type: String, default: "" },
   pubkey: { type: String, default: "" },
   lastseen: { type: String, default: "" },
-  activesec: { type: Number, default: 0 }
+  activesec: { type: Number, default: 0 },
+  country: { type: String, default: "" },
+  countrycode: { type: String, default: "" }
 }, {id: false});
 
 module.exports = mongoose.model('Masternodes', MasternodesSchema);

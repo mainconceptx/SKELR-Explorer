@@ -94,6 +94,7 @@
     "mn_status": "Status",
     "mn_activesec": "Active Time",
     "mn_lastseen": "Last Seen",
+    "mn_country": "Country",
     "mn_lastpaid": "Last Paid",
     "mn_notpaid": "Not Paid Yet",
 
